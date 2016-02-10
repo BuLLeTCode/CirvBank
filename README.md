@@ -1,9 +1,11 @@
 # CirvBank
 Bank system or sort off.
+
 # Dependenciji
 - [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant](https://www.vagrantup.com/downloads.html)
 - [Git](https://git-scm.com/downloads)
+- 
 # Kā palaist
 - Sakonfigurējam gitu
 - Atveram git shell
