@@ -51,9 +51,9 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     date_created = models.DateTimeField('Parskaitijuma datums', default=timezone.now)
 
-    #parskatissanas metode. jaizsauc skataa (views.py)
+    # parskaitissanas metode. jaizsauc skataa (views.py)
     def transfer(self):
-        #parbauda vai pietiek naudas
+        # parbauda vai pietiek naudas
         if not self.account_from.balance > self.amount:
             return False
 
