@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 {% block title %} Pārskaitījumi {%endblock%}
 {% block subheading %} Pārskaitījumi {%endblock%}
 
@@ -8,13 +9,22 @@
   </li>
 {% endblock %}
 
-{% block content %}
 
-<form  action="{% url 'transactions' %}" method='post'>
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="Submit" />
-</form>
+{% block content %}
+<div class="row">
+  <div class="col-lg-6">
+    <form action="{% url 'transactions' %}" method='post' role="form">
+      <legend>Jauns pārskaitījums</legend>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">
+          {% bootstrap_icon "ok" %} Pārskaitīt
+        </button>
+      {% endbuttons %}
+    </form>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-lg-8">
@@ -36,7 +46,11 @@
             </thead>
             <tbody>
               {% for transaction in transactions %}
-              <tr>
+              {% if transaction.credit %}
+              <tr class="success">
+              {% else %}
+              <tr class="danger">
+              {% endif %}
                 <td>{{transaction.date_created|date:'d-m-Y'}}</td>
                 <td>{{transaction.date_created|date:'H:i'}}</td>
                 <td>{{transaction.account_from}}</td>

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 import random, decimal
 from django.utils import timezone
 from django.db.models import Q
+from banking.utils import is_credit
 #from django.core.validators import RegexValidator
 
 class Account(models.Model):
@@ -31,9 +32,12 @@ class Account(models.Model):
     #visi parskaitijumi kuros konts piedalijies
     def transactions(self, count = None):
         if count:
-            return Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')[:count]
+            t = Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')[:count]
+            #apskata visus elementus un iestata lauku 'credit' ja naudu sanem lietotajs, kas skatas lapu
+            return map(lambda tr: is_credit(tr, self), t)
         else:
-            return Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')
+            t = Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')[:count]
+            return map(lambda tr: is_credit(tr, self), t)
 
     #nosaukuma  konta numurs un vards, uzvards
     def __str__(self):
@@ -64,9 +68,9 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     date_created = models.DateTimeField('Parskaitijuma datums', default=timezone.now)
 
-    #parskatissanas metode. jaizsauc skataa (views.py)
+    # parskaitissanas metode. jaizsauc skataa (views.py)
     def transfer(self):
-        #parbauda vai pietiek naudas
+        # parbauda vai pietiek naudas
         if not self.account_from.balance > self.amount:
             return False
 

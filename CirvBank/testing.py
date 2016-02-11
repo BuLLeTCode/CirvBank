@@ -25,7 +25,17 @@ def create_transaction():
 def get_some_transaction(id):
     return Transaction.objects.filter()[id]
 
-# create_transaction()
-t = get_some_transaction(0)
-account = t.account_from
-print account.transactions()[0].date_created.time()
+a = get_some_account(0)
+b = get_some_account(1)
+
+def is_credit(T, account):
+    if T.account_from == account:
+        T.credit=False
+    else:
+         T.credit=True
+    return T
+
+col = map(lambda tr: is_credit(tr, b), b.transactions())
+for c in col:
+    print c.credit
+print b

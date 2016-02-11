@@ -28,22 +28,27 @@ def transactions(request):
             amnt= form.cleaned_data['amount']
             sender = request.user.account
             receiver = Account.objects.filter(number = act_number)
-            if receiver:
-                t = Transaction()
-                t.account_to = receiver[0]
-                t.account_from = sender
-                t.amount = amnt
-                if t.transfer():
-                    t.save()
-                    return HttpResponseRedirect('/transactions')
+            if receiver and amnt > 0 and act_number:
+                if not receiver[0] == sender:
+                    t = Transaction()
+                    t.account_to = receiver[0]
+                    t.account_from = sender
+                    t.amount = amnt
+                    if t.transfer():
+                        t.save()
+                        return HttpResponseRedirect('/transactions')
+                    else:
+                        form.add_error("amount", "Nepietiek lidzeklu")
                 else:
-                    form.add_error("amount", "Nepietiek lidzeklu")
+                    form.add_error("account_number", "nevar parskaitit sev")
             else:
-                form.add_error("number", "Nepareizs konta numurs")
+                form.add_error("", "Nepareizi dati")
     else:
         form = TransferForm()
-        account = request.user.account
-        context = {'form': form, "account" : account, "transactions": account.transactions()}
+
+    account = request.user.account
+    transactions = account.transactions()
+    context = {'form': form, "account" : account, "transactions": transactions}
     return render(request, 'banking/transactions.html', context)
 
 def user_logout(request):
