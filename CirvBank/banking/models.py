@@ -8,7 +8,7 @@ from django.utils import timezone
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     number = models.CharField(max_length=50, blank=True)
-    balance = models.IntegerField(default=0)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     date_created = models.DateTimeField('date published', default=timezone.now)
 
     #save metodes overraids, lai varetu pievienot uzgenereto konta numuru

@@ -7,9 +7,6 @@ from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-class DetailView(generic.DetailView):
-    model = Account
-    template_name = 'accounts/detail.html'
 
 def home(request):
     return render(request, "home.html")
@@ -25,11 +22,9 @@ def user_logout(request):
     return render(request, "home.html")
 
 def user_login(request):
-    # if this is a POST request we need to process the form data
+    #TODO sitas viss ir DRAUSMAS, jasalabo lai neizskatas tik briesmigi
     if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
         form = LoginForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -41,10 +36,10 @@ def user_login(request):
                     return HttpResponseRedirect('/bank')
                 else:
                     pass
-                    #nevajadzetu notitk
+                    #nevajadzetu notitk, konts deaktivizets
             else:
                 pass
-    # if a GET (or any other method) we'll create a blank form
+
     else:
         form = LoginForm()
 
