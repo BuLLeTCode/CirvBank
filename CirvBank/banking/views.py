@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def home(request):
-    return render(request, "banking/home.html")
+    #return render(request, "banking/home.html")
+	return render(request, "banking/logout.html")
 
 
 @login_required
@@ -47,7 +48,8 @@ def transactions(request):
 
 def user_logout(request):
     logout(request)
-    return render(request, "banking/home.html")
+    #return render(request, "banking/home.html")
+    return render(request, "banking/logout.html")
 
 def user_login(request):
     #TODO sitas viss ir DRAUSMAS, jasalabo lai neizskatas tik briesmigi
@@ -72,4 +74,5 @@ def user_login(request):
     else:
         form = LoginForm()
 
-    return render(request, 'banking/login.html', {'form': form})
+    #return render(request, 'banking/login.html', {'form': form})
+	return render(request, 'banking/login_new.html', {'form': form})

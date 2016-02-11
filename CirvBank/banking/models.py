@@ -4,11 +4,28 @@ from django.contrib.auth.models import User
 import random, decimal
 from django.utils import timezone
 from django.db.models import Q
+#from django.core.validators import RegexValidator
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     number = models.CharField(max_length=50, blank=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    #phone_regex = RegexValidator(regex=r'^/e/{9,15}$', message="Telefona numura formats: '+371 12345678'.")
+    phone_number = models.CharField(max_length=12, blank=True) #Telefona numurs ar visu REGEX! :)
+
+    #List ar Choices, cerams, pietiks ar diviem dzimumiem :)
+    DZIMUMS = (
+        ('S', 'Sieviete'),
+        ('V', 'Virietis'),
+    )
+    gender = models.CharField(max_length=1, choices=DZIMUMS, blank=True)
+    birth_date = models.DateField(default=timezone.now)
+    city = models.CharField(max_length=20, blank=True)
+    address = models.CharField(max_length=50, blank=True)
+    Postcode = models.CharField(max_length=10, blank=True)
+    contacting_password = models.CharField(max_length=50, blank=True)
+
     date_created = models.DateTimeField('Izveidosanas datums', default=timezone.now)
 
     #visi parskaitijumi kuros konts piedalijies

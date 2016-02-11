@@ -4,8 +4,9 @@ from . import views
 
 
 urlpatterns = [
-     url(r'^$', views.home),
-     url(r'^accounts/login/$', views.user_login, name="user_login"),
+     #url(r'^$', views.home),
+     #url(r'^accounts/login/$', views.user_login, name="user_login"),
+	 url(r'^$', views.user_login, name="user_login"),
      url(r'^bank/$', views.bank, name="bank"),
      url(r'^transactions/$', views.transactions, name="transactions"),
      url('^logout/', views.user_logout, name="logout")
