@@ -42,7 +42,8 @@ def transactions(request):
     else:
         form = TransferForm()
         account = request.user.account
-        context = {'form': form, "account" : account, "transactions": account.transactions()}
+        transactions = account.transactions()
+        context = {'form': form, "account" : account, "transactions": transactions}
     return render(request, 'banking/transactions.html', context)
 
 def user_logout(request):

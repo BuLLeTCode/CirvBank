@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 import random, decimal
 from django.utils import timezone
 from django.db.models import Q
+from banking.utils import is_credit
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
@@ -14,9 +15,12 @@ class Account(models.Model):
     #visi parskaitijumi kuros konts piedalijies
     def transactions(self, count = None):
         if count:
-            return Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')[:count]
+            t = Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')[:count]
+            #apskata visus elementus un iestata lauku 'credit' ja naudu sanem lietotajs, kas skatas lapu
+            return map(lambda tr: is_credit(tr, self), t)
         else:
-            return Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')
+            t = Transaction.objects.filter(Q (account_from=self) | Q(account_to=self) ).order_by('-date_created')[:count]
+            return map(lambda tr: is_credit(tr, self), t)
 
     #nosaukuma  konta numurs un vards, uzvards
     def __str__(self):
