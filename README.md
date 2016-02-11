@@ -13,7 +13,6 @@ Bank system or sort off.
 - Rakstam `cd kur/gribu/glabat/`
 - Rakstam `git clone git@github.com:BuLLeTCode/CirvBank.git`
 - Rakstam `cd CirvBank`
-- Rakstam `git checkout django`
 - Rakstam `vagrant up`
 - Aizejam uzpīpēt, pagatavot kafiju, apskriet ap māju, utt. Būs ilgi.
 - Kad gatavs, rakstam `vagrant ssh`
