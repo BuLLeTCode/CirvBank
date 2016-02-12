@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %} Klienta informācija {%endblock%}
+{% block subheading %} Klienta informācija {%endblock%}
+
+{% block nav-user-info %}
+  <li class="active">
+    <a href="{% url 'user_info' %}"><i class="fa fa-fw fa-user"></i> Klienta informācija</a>
+  </li>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-lg-6">
+		<h3>Klienta informācija:</h3>
+		<table class="table">
+    <thead>
+      <tr>
+        <th>Vārds</th>
+        <th>Uzvārds</th>
+        <th>Epasts</th>
+		<th>Tālrunis</th>
+		<th>Deklarētā dzīvesvieta</th>
+		<th>Dzimšanas diena</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{account.user.first_name }}</td>
+        <td>{{account.user.last_name }}</td>
+        <td>{{account.user.email}}</td>
+		<td>{{account.phone_number}}</td>
+        <td>{{account.city}} {{account.address}} {{account.Postcode}}</td>
+        <td>{{account.birth_date}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+		</div>
+	</div>
+
+{% endblock %}

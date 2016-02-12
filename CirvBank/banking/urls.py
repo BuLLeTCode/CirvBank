@@ -9,5 +9,6 @@ urlpatterns = [
 	 url(r'^$', views.user_login, name="user_login"),
      url(r'^bank/$', views.bank, name="bank"),
      url(r'^transactions/$', views.transactions, name="transactions"),
+     url(r'^info/$', views.user_info, name="user_info"),
      url('^logout/', views.user_logout, name="logout")
 ]
