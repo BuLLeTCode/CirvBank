@@ -13,7 +13,8 @@ class Account(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     #phone_regex = RegexValidator(regex=r'^/e/{9,15}$', message="Telefona numura formats: '+371 12345678'.")
-    phone_number = models.CharField(max_length=12, blank=True) #Telefona numurs ar visu REGEX! :)
+    phone_number = models.CharField(max_length=12, blank=True,
+                                    help_text="Formats, piemeram, +31721241275") #Telefona numurs ar visu REGEX! :)
 
     #List ar Choices, cerams, pietiks ar diviem dzimumiem :)
     DZIMUMS = (
@@ -22,10 +23,14 @@ class Account(models.Model):
     )
     gender = models.CharField(max_length=1, choices=DZIMUMS, blank=True)
     birth_date = models.DateField(default=timezone.now)
-    city = models.CharField(max_length=20, blank=True)
-    address = models.CharField(max_length=50, blank=True)
-    Postcode = models.CharField(max_length=10, blank=True)
-    contacting_password = models.CharField(max_length=50, blank=True)
+    city = models.CharField(max_length=20, blank=True,
+                            help_text="Piemeram, Riga")
+    address = models.CharField(max_length=50, blank=True,
+                               help_text="Piemeram, Liela iela 15a")
+    Postcode = models.CharField(max_length=10, blank=True,
+                                help_text="Piemeram, LV-4512")
+    contacting_password = models.CharField(max_length=50, blank=True,
+                                           help_text="Parole, kas tiek izmantota sazinai ar banku")
 
     date_created = models.DateTimeField('Izveidosanas datums', default=timezone.now)
 

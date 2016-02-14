@@ -187,7 +187,13 @@
         
         </div>
         
-        <div class="copyright">© 2016.</div>        
+        <!--<div class="copyright">© 2016.</div>-->
+		<!-- Jābūt mūsdienīgam, gads tiek iegūts ar Javascript palīdzību...-->
+		<div class="copyright">©<script>
+		var d = new Date();
+		var n = d.getFullYear();
+		document.write(" " + n);
+		</script>.</div>
     
     
     </section>    
