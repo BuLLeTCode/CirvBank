@@ -1,0 +1,19 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+<link href="{% static 'banking/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-6">
+      <form action="{% url 'banklink_login' %}" method='post' role="form">
+        <legend>Ieiet</legend>
+        {% csrf_token %} {% bootstrap_form form %} {% buttons %}
+        <button type="submit" class="btn btn-primary">
+          {% bootstrap_icon "ok" %} Pārskaitīt
+        </button>
+        {% endbuttons %}
+      </form>
+    </div>
+  </div>
+</div>

@@ -10,5 +10,7 @@ urlpatterns = [
      url(r'^bank/$', views.bank, name="bank"),
      url(r'^transactions/$', views.transactions, name="transactions"),
      url(r'^info/$', views.user_info, name="user_info"),
-     url('^logout/', views.user_logout, name="logout")
+     url(r'^logout/', views.user_logout, name="logout"),
+     url(r'^banklink_data/', views.receive_banklink_params, name="banklink"),
+     url(r'^banklink/', views.banklink_login, name="banklink_login")
 ]

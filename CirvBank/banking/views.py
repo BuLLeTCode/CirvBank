@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Account, Transaction
 from django.template import loader
 from django.views import generic
-from .forms import LoginForm, TransferForm
+from .forms import LoginForm, TransferForm, BanklinkLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -12,6 +12,28 @@ def home(request):
     #return render(request, "banking/home.html")
 	return render(request, "banking/logout.html")
 
+@login_required
+def receive_banklink_params(request):
+	pass
+
+def banklink_login(request):
+	form = BanklinkLoginForm(request.GET)
+	if request.method == "POST":
+		form = BanklinkLoginForm(request.POST)
+		if form.is_valid():
+			# TODO if dati ir derigi - ielogo un shit....
+
+			account = request.user.account
+			context = {'transaction_data': form, "account" : account, "transactions": account.transactions}
+			return render(request, "banking/payment_preview.html", context)
+		else:
+			form.add_error("", "Nepareizi dati")
+			#komentars vehiem
+			#parametri no GET rekvesta pazuda
+			return render(request, 'banking/login_form.html', { 'form' : form, "data" : request.GET.dict() })
+	else:
+
+		return render(request, 'banking/login_form.html', { 'form' : form, "data" : request.GET.dict() })
 
 @login_required
 def bank(request):
