@@ -7,3 +7,8 @@ def is_credit(T, account):
     else:
          T.credit=True
     return T
+
+# naudu no centiem uz eiro parveido
+def decimalize(ones):
+    hundreds = float(ones) / 100
+    return hundreds

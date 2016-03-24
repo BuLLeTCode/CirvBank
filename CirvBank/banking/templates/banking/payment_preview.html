@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
-{% block title %} Klienta informācija {%endblock%}
+{% block title %} Pārskaitījums{%endblock%}
 {% block subheading %} Klienta informācija {%endblock%}
 
 {% block content %}
-  
+    <form action="{% url 'banklink_template' %}" method='post' role="form">
+        <legend>Ieiet</legend>
+
+        sAŅEM: {{ template.receiver }} <br>
+        Sūta: {{ template.sender}} <br>
+        summa: {{ template.amount }}
+
+        {% csrf_token %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "ok" %} Pārskaitīt
+            </button>
+        {% endbuttons %}
+    </form>
 
 {% endblock %}
