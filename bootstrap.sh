@@ -16,3 +16,4 @@ sudo apt-get install -y build-essential python-dev
 # sudo service mongodb start
 sudo pip install django
 sudo pip install django-bootstrap3
+sudo pip install sendgrid

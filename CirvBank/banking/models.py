@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 import random, decimal
 from django.utils import timezone
 from django.db.models import Q
-from utils import is_credit
+from utils import is_credit, send_email_notification
 from django.db.models.signals import post_init
 
 # from django.core.validators import RegexValidator
@@ -34,7 +34,8 @@ class Account(models.Model):
     contacting_password = models.CharField(max_length=50, blank=True,
                                            help_text="Parole, kas tiek izmantota sazinai ar banku")
 
-    date_created = models.DateTimeField('Izveidosanas datums', default=timezone.now)
+    #Email adress for sending notification about ingoing money
+    email_adresss = models.CharField(max_length=50, help_text="Piemeram, cirvbank@inbox.lv")
 
     # visi parskaitijumi kuros konts piedalijies
     def transactions(self, count=None):
@@ -90,7 +91,8 @@ class Transaction(models.Model):
         self.account_from.save()
         self.account_to.balance += decimal.Decimal(self.amount)
         self.account_to.save()
-
+        #also, from utils, try to send email to person, who get money with some basic information
+        send_email_notification(self.account_to.email_adresss, self.amount, self.account_to.balance)
         return True
 
 
