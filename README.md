@@ -28,3 +28,8 @@ vai arī var dzēst ārā visu vagranta boxu, un sakt no jauna ar `vagrant up`
 superusera konts: user: user, pw:parole123<br />
 parastā usera konts: user:test, pw:parole123<br />
 vēl viens parasts user: user: testUser , pw: skrien3478<br />
+
+#Bankas epasts
+- Epasts: cirvbankinfo@inbox.lv
+- Parole: parole123
+- Jautājums: Dzīvnieka vārds: cirvbank
