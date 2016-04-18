@@ -22,7 +22,7 @@ def banklink_template(request):
     if request.method == "POST":
         ttobj = transaction_template.execute()
         redirect_path = prepare_param_redirect_link(ttobj.redirect_address, ttobj.fulfilled)
-        print("eit ir pareia vieta" + redirect_path)
+        # print("eit ir pareia vieta" + redirect_path)
         logout(request)
 
         return HttpResponseRedirect(redirect_path)
@@ -112,8 +112,7 @@ def user_info(request):
 
 def user_logout(request):
     logout(request)
-    # return render(request, "banking/home.html")
-    return render(request, "banking/logout.html")
+    return redirect("user_login")
 
 def user_login(request):  # Labak patik?
     form = LoginForm(request.POST or None)
