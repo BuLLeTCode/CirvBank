@@ -29,7 +29,7 @@ def send_email_notification(target_email, amount, bilance):
                                    None, raise_errors=True)
     message = sendgrid.Mail()#Define mail object
     message.add_to(str(target_email))
-    message.set_from("raivis.rugelis@va.lv")#Sis gan bus janomaina! :D
+    message.set_from("raivis.rugelis@va.lv")#Sis gan bus janomaina! :D - Sis nemainisies
     message.set_subject("Konta bilances maina")
     message.set_html("""<!DOCTYPE HTML>
 
