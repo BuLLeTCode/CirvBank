@@ -101,6 +101,7 @@ class TransactionTemplate(models.Model):
     account_to = models.ForeignKey(Account, related_name='account_to1', on_delete=models.CASCADE, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     fulfilled = models.BooleanField(default=False)
+    redirect_address = models.CharField(max_length=150)
     date_created = models.DateTimeField('Parskaitijuma datums', default=timezone.now)
 
     @property
@@ -121,3 +122,4 @@ class TransactionTemplate(models.Model):
                 self.fulfilled = True
                 transaction.save()
         self.save()
+        return self;

@@ -3,6 +3,13 @@ Seit doma likt visadas fukncijas kas neder citur
 '''
 import sendgrid
 
+def prepare_param_redirect_link(link, success):
+    if success:
+        return link.rstrip("/") + "?success=1"
+    else:
+        return link.rstrip("/") + "?success=0"
+
+
 def is_credit(T, account):
     if T.account_from == account:
         T.credit=False

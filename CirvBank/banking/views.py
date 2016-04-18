@@ -4,12 +4,11 @@ from .models import Account, Transaction, TransactionTemplate
 from .forms import LoginForm, TransferForm, BanklinkLoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from utils import decimalize
+from utils import decimalize, prepare_param_redirect_link
 
 def home(request):
-    # return render(request, "banking/home.html")
-    return render(request, "banking/logout.html")
-
+    return render(request, "banking/user_login.html")
+    # return render(request, "banking/logout.html")
 
 @login_required
 def banklink_template(request):
@@ -21,15 +20,18 @@ def banklink_template(request):
     transaction_template.account_from = account
 
     if request.method == "POST":
-        transaction_template.execute()
+        ttobj = transaction_template.execute()
+        redirect_path = prepare_param_redirect_link(ttobj.redirect_address, ttobj.fulfilled)
+        print("eit ir pareia vieta" + redirect_path)
+        logout(request)
 
-        # TODO te izlogo useri ara un redirekte kaut kur, kur vajag
-        return redirect("bank")
+        return HttpResponseRedirect(redirect_path)
     else:
+        # TODO VAJAg padot uz prieksu linku kur parredirectet
         context = {"account": account, "template" : transaction_template}
         return render(request, "banking/payment_preview.html", context)
 
-
+# sitas sanem pieprasijumu
 def banklink_login(request):
     form = BanklinkLoginForm()
 
@@ -50,10 +52,13 @@ def banklink_login(request):
         number = request.GET.get("acc")
         sum = request.GET.get("sum")
 
+        if not number or not sum:
+            return redirect("user_login")
         # jauns templeit objekts - sitas zinas visu par to ko grib darit lietotajs
         transaction = TransactionTemplate()
         transaction.account_to = Account.from_account_number(number)
         transaction.amount = decimalize(sum)
+        transaction.redirect_address = request.META['HTTP_REFERER']
         transaction.save()
 
         # TODO tads naivs piegajiens - ar sesiju parsutit (labojam?)
@@ -109,7 +114,6 @@ def user_logout(request):
     logout(request)
     # return render(request, "banking/home.html")
     return render(request, "banking/logout.html")
-
 
 def user_login(request):  # Labak patik?
     form = LoginForm(request.POST or None)
